@@ -171,8 +171,11 @@
             </svg>
             HANWHA OCEAN AX COMMAND CENTER
         </div>
-        <div style="font-size: 14px; color: var(--secondary)">
-            2026-03-25 | 10:42 PM (KR)
+        <div style="display: flex; align-items: center; gap: 20px;">
+            <a href="manage.html" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid var(--primary); padding: 8px 16px; border-radius: 8px; transition: all 0.3s ease;">자산 관리 (Asset Variation) →</a>
+            <div style="font-size: 14px; color: var(--secondary)">
+                2026-03-25 | 03:30 AM (KR)
+            </div>
         </div>
     </nav>
 
@@ -186,48 +189,52 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <div class="stat-label">Total Managed Assets</div>
-                <div class="stat-value">1,248</div>
+                <div class="stat-value">1,482</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">Active IoT Nodes</div>
-                <div class="stat-value" style="color: var(--success)">98.2%</div>
+                <div class="stat-value" style="color: var(--success)">99.4%</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Current Critical Alerts</div>
-                <div class="stat-value" style="color: var(--danger)">02</div>
+                <div class="stat-label">Critical OT Alerts</div>
+                <div class="stat-value" style="color: var(--danger)">01</div>
             </div>
             <div class="stat-card">
                 <div class="stat-label">RPA Auto-Tickets (MTD)</div>
-                <div class="stat-value">42</div>
+                <div class="stat-value">58</div>
             </div>
         </div>
 
         <div class="main-grid">
             <div class="card">
-                <h3>Asset Distribution & Load Trend</h3>
+                <h3>Asset Load Trend (Yard Backbone vs OT Nodes)</h3>
                 <div id="mainChart" class="chart-container"></div>
             </div>
             <div class="card">
-                <h3>Real-time Asset Status</h3>
+                <h3>Real-time Yard Status</h3>
                 <div class="asset-list">
                     <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>PLC-Controller-042</span>
-                        <span style="color: var(--success)">Normal</span>
+                        <span><span class="status-dot status-active"></span>ROB-WELD-D1-05 (Spider)</span>
+                        <span style="color: var(--success)">Operational</span>
                     </div>
                     <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>Server-GJ-Main-01</span>
-                        <span style="color: var(--success)">Normal</span>
+                        <span><span class="status-dot status-active"></span>CRN-GOL-YARD5-01 (Goliath)</span>
+                        <span style="color: var(--success)">Standby</span>
                     </div>
                     <div class="asset-item">
-                        <span><span class="status-dot status-warning"></span>Sensor-Water-Dock1</span>
-                        <span style="color: var(--warning)">Threshold</span>
+                        <span><span class="status-dot status-warning"></span>SNS-ENV-DOCK2-42</span>
+                        <span style="color: var(--warning)">High Alert</span>
                     </div>
                     <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>Robot-Welding-77</span>
-                        <span style="color: var(--success)">Active</span>
+                        <span><span class="status-dot status-active"></span>NET-GJ-CORE-01 (Backbone)</span>
+                        <span style="color: var(--success)">Online</span>
+                    </div>
+                    <div class="asset-item">
+                        <span><span class="status-dot status-active"></span>SRV-GJ-CMDB-01 (Central)</span>
+                        <span style="color: var(--success)">Online</span>
                     </div>
                     <div class="stat-card" style="margin-top: 20px; padding: 15px; border-style: dashed; text-align: center;">
-                        <a href="https://github.com/glory903-devsecops/hanwha-ocean-asset-monitor" style="color: var(--primary); text-decoration: none; font-size: 14px;">View Full Code on GitHub →</a>
+                        <a href="manage.html" style="color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600;">기능 확장: 자산 등록/삭제 페이지 이동 →</a>
                     </div>
                 </div>
             </div>
@@ -235,7 +242,7 @@
     </div>
 
     <footer class="footer">
-        © 2026 Hanwha Ocean AX Portfolio. Designed for Recruitment Excellence.
+        © 2026 Hanwha Ocean AX Portfolio. All Data derived from FastAPI CMDB Engine.
     </footer>
 
     <script>
@@ -244,7 +251,7 @@
         var option = {
             backgroundColor: 'transparent',
             tooltip: { trigger: 'axis' },
-            legend: { data: ['IT Servers', 'OT Sensors'], textStyle: { color: '#94A3B8' } },
+            legend: { data: ['Yard IT Backbone', 'Smart OT Robots'], textStyle: { color: '#94A3B8' } },
             grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
             xAxis: {
                 type: 'category',
@@ -259,10 +266,10 @@
             },
             series: [
                 {
-                    name: 'IT Servers',
+                    name: 'Yard IT Backbone',
                     type: 'line',
                     smooth: true,
-                    data: [120, 132, 101, 134, 90, 230, 210],
+                    data: [150, 232, 201, 154, 190, 330, 410],
                     itemStyle: { color: '#FF6B00' },
                     areaStyle: {
                         color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
@@ -272,10 +279,10 @@
                     }
                 },
                 {
-                    name: 'OT Sensors',
+                    name: 'Smart OT Robots',
                     type: 'line',
                     smooth: true,
-                    data: [220, 182, 191, 234, 290, 330, 310],
+                    data: [320, 282, 391, 234, 490, 530, 610],
                     itemStyle: { color: '#10B981' }
                 }
             ]

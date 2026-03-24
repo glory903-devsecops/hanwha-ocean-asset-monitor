@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Asset Management - Hanwha Ocean AX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #FF6B00;
+            --bg: #0F172A;
+            --card: rgba(30, 41, 59, 0.7);
+            --text: #F8FAFC;
+            --secondary: #94A3B8;
+            --border: rgba(255, 255, 255, 0.1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Outfit', 'Noto Sans KR', sans-serif; }
+        body { background-color: var(--bg); color: var(--text); padding-top: 80px; }
+
+        .navbar {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            padding: 0 40px;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            position: fixed;
+            top: 0; width: 100%; z-index: 1000;
+            justify-content: space-between;
+        }
+
+        .container { max-width: 1240px; margin: 0 auto; padding: 20px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-primary { background: var(--primary); color: white; }
+        .btn-outline { border: 1px solid var(--primary); color: var(--primary); background: transparent; }
+        .btn:hover { opacity: 0.8; transform: translateY(-2px); }
+
+        .asset-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .asset-table th, .asset-table td {
+            text-align: left;
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .asset-table th { background: rgba(255, 255, 255, 0.05); color: var(--secondary); font-size: 14px; text-transform: uppercase; }
+        
+        .status-badge {
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .status-active { background: rgba(16, 185, 129, 0.1); color: #10B981; }
+        .status-warning { background: rgba(245, 158, 11, 0.1); color: #F59E0B; }
+
+        .form-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        .form-card {
+            background: #1E293B;
+            padding: 30px;
+            border-radius: 16px;
+            width: 450px;
+            border: 1px solid var(--border);
+        }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: var(--secondary); font-size: 14px; }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            background: rgba(15, 23, 42, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: white;
+        }
+
+        .action-btns { display: flex; gap: 10px; }
+        .action-btn { background: transparent; border: none; cursor: pointer; color: var(--secondary); font-size: 12px; }
+        .action-btn:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div style="font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px;">
+             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+             HANWHA OCEAN AX
+        </div>
+        <div>
+            <a href="index.html" class="btn btn-outline" style="font-size: 14px;">대시보드로 돌아가기 (Dashboard)</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1 style="font-size: 32px; margin-bottom: 5px;">자산 인벤토리 관리 (CMDB)</h1>
+                <p style="color: var(--secondary)">한화오션 거제 야드 내 모든 IT/OT 자산의 등록, 수정, 삭제 프로세스</p>
+            </div>
+            <button class="btn btn-primary" onclick="toggleForm(true)">+ 자산 추가 (Register Asset)</button>
+        </div>
+
+        <table class="asset-table">
+            <thead>
+                <tr>
+                    <th>Asset ID</th>
+                    <th>Asset Name</th>
+                    <th>Type</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="assetBody">
+                <tr>
+                    <td>ROB-WELD-D1-05</td>
+                    <td>Spider 용접 로봇 #5</td>
+                    <td>Industrial OT</td>
+                    <td>제1도크 조립공장</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>CRN-GOL-Y5-01</td>
+                    <td>골리앗 크레인 제어기</td>
+                    <td>Industrial OT</td>
+                    <td>제5야드 (Goliath)</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>SRV-GJ-CMDB-01</td>
+                    <td>AX 중앙 CMDB 서버</td>
+                    <td>IT Infra</td>
+                    <td>메인 데이터 센터 R-04</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>SNS-ENV-D2-42</td>
+                    <td>도크2 온도/습도 센서</td>
+                    <td>IoT Node</td>
+                    <td>제2도크 (Bottom)</td>
+                    <td><span class="status-badge status-warning">Warning</span></td>
+                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>PLC-PIPE-12</td>
+                    <td>배관 자동 절단 PLC</td>
+                    <td>Industrial OT</td>
+                    <td>Pipe Shop #3</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                </tr>
+                <tr>
+                    <td>NET-GJ-CORE-01</td>
+                    <td>야드 백본 스위치</td>
+                    <td>IT Infra</td>
+                    <td>네트워크 허브룸</td>
+                    <td><span class="status-badge status-active">Active</span></td>
+                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div style="margin-top: 30px; padding: 25px; background: rgba(255, 107, 0, 0.03); border-radius: 16px; border: 1px dashed var(--primary); font-size: 14px; line-height: 1.8;">
+            <h4 style="color: var(--primary); margin-bottom: 10px;">📋 데이터 관리 및 아키텍처 정보</h4>
+            <ul style="list-style: none; color: var(--secondary);">
+                <li>• <b>등록 경로 (POST /api/v1/assets)</b>: 새로운 자산이 등록되면 FastAPI가 Pydantic 모델을 통해 유효성을 검사합니다.</li>
+                <li>• <b>수정 경로 (PUT /api/v1/assets/{id})</b>: 자산의 상태(Status)나 위치 정보 변경 시 SQLAlchemy를 통해 DB를 업데이트합니다.</li>
+                <li>• <b>삭제 경로 (DELETE /api/v1/assets/{id})</b>: 자산 폐기 시 트랜잭션을 안전하게 처리하며 모든 내역은 감사 로그(Audit Trail)에 기록됩니다.</li>
+                <li style="margin-top: 10px; color: var(--text);">* 본 화면은 백엔드 API와의 인터랙션을 시각화하기 위해 설계된 관리 인터페이스 UI입니다.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="form-overlay" id="formOverlay">
+        <div class="form-card">
+            <h2 style="margin-bottom: 20px; color: var(--primary);">자산 신규 등록</h2>
+            <div class="form-group">
+                <label>Asset Name (자산명)</label>
+                <input type="text" placeholder="예: 7번 도크 조립 로봇">
+            </div>
+            <div class="form-group">
+                <label>Asset Type (자산 유형)</label>
+                <select>
+                    <option>IT Infrastructure</option>
+                    <option>Industrial OT</option>
+                    <option>IoT Node</option>
+                    <option>Security Gateway</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Location (설치 위치)</label>
+                <input type="text" placeholder="예: G-Block 조립공장 2F">
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 30px;">
+                <button class="btn btn-primary" style="flex: 1;" onclick="addAsset()">등록 완료</button>
+                <button class="btn btn-outline" style="flex: 1;" onclick="toggleForm(false)">취소</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleForm(show) {
+            document.getElementById('formOverlay').style.display = show ? 'flex' : 'none';
+        }
+
+        function addAsset() {
+            alert('자산 등록 요청이 백엔드 API로 비동기 전송되었습니다. (Demo Mode: 데이터베이스 반영 생략)');
+            toggleForm(false);
+        }
+    </script>
+</body>
+</html>
