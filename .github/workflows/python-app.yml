@@ -24,9 +24,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
+        pip install -r requirements.txt --verbose
         
     - name: Seed Database & Verify System Results
       run: |
+        export PYTHONPATH=$PYTHONPATH:.
         python src/seed_data.py
         python src/tests/test_results.py
