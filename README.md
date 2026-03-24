@@ -1,39 +1,39 @@
-# ⚓ Shipyard Integrated Asset & IoT Monitoring Dashboard
-> **"AX Command Center for Hanwha Ocean Smart Yard"**
+# ⚓ 조선소 통합 자산 및 IoT 모니터링 대시보드
+> **"한화오션 스마트 야드를 위한 AX 커맨드 센터"**
 
-This project is an enterprise-grade **Unified IT/OT Asset Monitoring System** designed for the modern shipyard. It provides real-time visibility into IT infrastructure (Servers, Network) and Production OT/IoT devices (Sensors, PLCs, Robots), directly supporting Hanwha Ocean's 2030 Smart Yard Strategy.
+이 프로젝트는 현대적 조선소 환경을 위해 설계된 엔터프라이즈급 **통합 IT/OT 자산 모니터링 시스템**입니다. 서버, 네트워크 등 IT 인프라와 센서, PLC, 로봇 등 생산 OT/IoT 장비에 대한 실시간 가시성을 제공하며, 한화오션의 2030 스마트 야드 전략을 직접적으로 지원합니다.
 
-## 🚀 Strategic Value Proposition (AX/DX)
-- **IT/OT Convergence**: Break down silos between data centers and production docks.
-- **Downtime Minimization**: Real-time status tracking and proactive failure monitoring.
-- **Lifecycle Optimization**: Automated CMDB (Configuration Management Database) for ITAM/ITSM best practices.
-- **RPA Integration**: Seamlessly bridge the gap between "detecting a failure" and "procuring a replacement" via automated tickets.
+## 🚀 전략적 가치 제안 (AX/DX)
+- **IT/OT 융합**: 데이터 센터와 생산 도크 간의 정보 사일로(Silo)를 제거합니다.
+- **다운타임 최소화**: 실시간 상태 추적 및 선제적 장애 모니터링을 통한 가동률 극대화.
+- **라이프사이클 최적화**: ITAM/ITSM 베스트 프랙티스를 적용한 자동화된 CMDB(구성 관리 데이터베이스).
+- **RPA 통합 연계**: 장애 감지부터 부품 조달 및 티켓 발행까지 이어지는 프로세스 자동화의 기반.
 
-## 🛠 Tech Stack
+## 🛠 기술 스택
 - **Backend**: Python (FastAPI), SQLAlchemy (SQLite/PostgreSQL), Pydantic
-- **Frontend**: React, Apache ECharts (Dynamic Industrial Visualization)
-- **Data Protocols**: MQTT (IoT), SNMP (Network Infrastructure)
-- **Architecture**: 3-Tier Web Application with RESTful API & JWT Security
+- **Frontend**: React, Apache ECharts (역동적인 산업용 시각화)
+- **데이터 프로토콜**: MQTT (IoT), SNMP (네트워크 인프라)
+- **아키텍처**: RESTful API 및 JWT 보안이 적용된 3계층 웹 애플리케이션
 
-## 📂 Project Structure
-- `src/backend/`: FastAPI core, CMDB models, and database logic.
-- `src/frontend/`: React components and industrial dashboard (ECharts).
-- `src/seed_data.py`: Factory script to populate the system with realistic shipyard assets.
-- `docs/`: Strategic planning documents (AX Strategy, BRD, SDD).
+## 📂 프로젝트 구조
+- `src/backend/`: FastAPI 코어, CMDB 모델 및 데이터베이스 로직.
+- `src/frontend/`: React 컴포넌트 및 산업용 대시보드(ECharts).
+- `src/seed_data.py`: 실제 조선소 자산 데이터를 생성하는 팩토리 스크립트.
+- `docs/`: 전략 기획 문서 (AX 전략, BRD, SDD).
 
-## 🏁 Quick Start (One-Click Demo)
-1. **Initialize Environment**:
+## 🏁 빠른 시작 (데모 실행)
+1. **환경 초기화**:
    ```powershell
    python -m venv venv
    ./venv/Scripts/pip install -r requirements.txt
    ```
-2. **Launch System**:
+2. **시스템 실행**:
    ```powershell
    python run_dev.py
    ```
-3. **Explore Architecture**:
-   Visit [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs) to explore the **Swagger UI** and interact with the Live IT/OT CMDB.
+3. **아키텍처 탐색**:
+   [http://127.0.0.1:8000/docs](http://127.0.0.1:8000/docs)에 접속하여 **Swagger UI**를 통해 IT/OT CMDB 실시간 데이터를 확인하십시오.
 
 ---
-**Designed & Developed by Glory (AX/DevSecOps Engineer)**
-*Bridging the gap between IT support and Smart Factory innovation.*
+**기획 및 개발: Glory (AX/DevSecOps 엔지니어)**
+*IT 지원과 스마트 팩토리 혁신 사이의 가교(Bridge) 역할을 수행합니다.*
