@@ -22,9 +22,12 @@ def verify_system_results():
 
         print(f"✅ Total Enterprise Assets Tracked: {len(assets)}")
         
-        # Categorization
-        it_count = len([a for a in assets if a.asset_type in ['Server', 'Network']])
-        ot_count = len([a for a in assets if a.asset_type == 'IoT'])
+        # Categorization (IT vs OT/IoT)
+        it_categories = ['Server', 'Network', 'Security', 'IT Infra']
+        ot_categories = ['Industrial OT', 'IoT Node', 'IoT', 'OT']
+        
+        it_count = len([a for a in assets if a.asset_type in it_categories])
+        ot_count = len([a for a in assets if a.asset_type in ot_categories])
         
         print(f"- IT Infrastructure Assets: {it_count}")
         print(f"- OT/IoT Smart Yard Assets: {ot_count}")
@@ -38,7 +41,7 @@ def verify_system_results():
         # Business Value
         print("\n🚀 AX Business Value Demonstration:")
         print("1. [IT/OT Convergence]: Unified view of both Data Center and Shipyard Floor.")
-        print("2. [Proactive Maintenance]: Detected critical temperature sensor anomaly in Dock 1.")
+        print("2. [Proactive Maintenance]: Detected critical anomaly in Dock 2 (Humidity/Temp).")
         print("3. [Inventory Integrity]: 100% visibility into asset lifecycle (EOL tracking).")
 
     finally:
