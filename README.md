@@ -1,5 +1,6 @@
-# ⚓ 조선소 통합 자산 및 IoT 모니터링 대시보드
-![Enterprise CI](https://github.com/glory903-devsecops/hanwha-ocean-asset-monitor/actions/workflows/python-app.yml/badge.svg)
+# ⚓ 한화오션 AX 통합 자산 모니터링 시스템
+[![Enterprise CI](https://github.com/glory903-devsecops/hanwha-ocean-asset-monitor/actions/workflows/python-app.yml/badge.svg)](https://github.com/glory903-devsecops/hanwha-ocean-asset-monitor/actions)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-View_Dashboard-FF6B00?style=for-the-badge&logo=airplayvideo)](https://glory903-devsecops.github.io/hanwha-ocean-asset-monitor/)
 > **"한화오션 스마트 야드를 위한 AX 커맨드 센터"**
 
 이 프로젝트는 현대적 조선소 환경을 위해 설계된 엔터프라이즈급 **통합 IT/OT 자산 모니터링 시스템**입니다. 서버, 네트워크 등 IT 인프라와 센서, PLC, 로봇 등 생산 OT/IoT 장비에 대한 실시간 가시성을 제공하며, 한화오션의 2030 스마트 야드 전략을 직접적으로 지원합니다.
