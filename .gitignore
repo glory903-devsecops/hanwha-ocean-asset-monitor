@@ -1,0 +1,23 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+pip-log.txt
+pip-delete-this-directory.txt
+.venv
+pip-wheel-metadata/
+
+# Database
+asset_monitor.db
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
