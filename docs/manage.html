@@ -223,15 +223,11 @@
                 </select>
             </div>
             <div class="form-group">
-                <label>Location (설치 위치)</label>
-                <select id="assetLocation">
-                    <option value="제1도크 조립공장">제1도크 조립공장</option>
-                    <option value="제2도크 (Bottom)">제2도크 (Bottom)</option>
-                    <option value="제5야드 (Goliath)">제5야드 (Goliath)</option>
-                    <option value="Pipe Shop #3">Pipe Shop #3</option>
-                    <option value="메인 데이터 센터 R-04">메인 데이터 센터 R-04</option>
-                    <option value="본관 설계동 3F">본관 설계동 3F</option>
-                </select>
+                <label>Location (설치 위치 - 100개 구역 검색 지원)</label>
+                <input list="locationList" id="assetLocation" placeholder="구역 검색 (예: Yard-001)">
+                <datalist id="locationList">
+                    <!-- Populated by script -->
+                </datalist>
             </div>
             <div style="display: flex; gap: 10px; margin-top: 30px;">
                 <button class="btn btn-primary" style="flex: 1;" onclick="addAsset()">등록 완료</button>
@@ -241,6 +237,16 @@
     </div>
 
     <script>
+        // Populate 100 locations for the datalist
+        const locationList = document.getElementById('locationList');
+        const zones = ["Yard", "Dock", "Shop", "Lab", "Hub", "Zone"];
+        for(let i=1; i<=100; i++) {
+            const zone = zones[Math.floor(Math.random() * zones.length)];
+            const opt = document.createElement('option');
+            opt.value = `${zone}-${String(i).padStart(3, '0')}`;
+            locationList.appendChild(opt);
+        }
+
         function toggleForm(show) {
             document.getElementById('formOverlay').style.display = show ? 'flex' : 'none';
         }

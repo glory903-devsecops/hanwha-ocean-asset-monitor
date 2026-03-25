@@ -10,7 +10,7 @@ sys.path.append(os.path.dirname(__file__))
 from backend import models, database
 
 def seed_enterprise_assets_large():
-    print("🌱 Seeding High-Capacity Hanwha Ocean IT/OT Assets (700+ Items)...")
+    print("🌱 Seeding High-Capacity Hanwha Ocean IT/OT Assets (1,000 Items across 100 Locations)...")
     
     # Ensure tables exist
     models.Base.metadata.create_all(bind=database.engine)
@@ -21,11 +21,13 @@ def seed_enterprise_assets_large():
     db.query(models.Asset).delete()
     db.commit()
     
-    locations = [
-        "제1도크 조립공장", "제2도크 (Bottom)", "제3도크 육상건조장", "제5야드 (Goliath)",
-        "Pipe Shop #1", "Pipe Shop #2", "Pipe Shop #3", "Engine Room A", 
-        "메인 데이터 센터 R-04", "본관 설계동 3F", "야드 네트워크 허브 01", "도장공장 C구역"
-    ]
+    # Generate 100 unique locations
+    locations = []
+    zones = ["Yard", "Dock", "Shop", "Lab", "Hub", "Zone"]
+    for i in range(100):
+        zone = random.choice(zones)
+        sub_id = i + 1
+        locations.append(f"{zone}-{sub_id:03d}")
     
     asset_types = {
         "Industrial OT": ["Spider Welding Robot", "Goliath Crane Controller", "Auto Cutting PLC", "Blast Machine Control"],
@@ -36,27 +38,29 @@ def seed_enterprise_assets_large():
     }
 
     total_count = 0
+    assets_per_loc = 10 # 100 locations * 10 assets = 1,000 assets
+    
     for loc_idx, loc in enumerate(locations):
-        for i in range(60):
+        for i in range(assets_per_loc):
             a_type = random.choice(list(asset_types.keys()))
             a_name_prefix = random.choice(asset_types[a_type])
             
-            # Use location index (Lxx) and type (TYP) for guaranteed uniqueness
+            # Guaranteed uniqueness with loc_idx and asset index
             type_abbr = a_type[:3].upper()
-            a_code = f"{type_abbr}-L{loc_idx:02d}-{i:03d}"
+            a_code = f"{type_abbr}-L{loc_idx:03d}-A{i:03d}"
             
-            status = random.choices(["active", "warning", "critical"], weights=[90, 8, 2])[0]
+            status = random.choices(["active", "warning", "critical"], weights=[92, 6, 2])[0]
             
             asset = models.Asset(
                 asset_code=a_code,
-                name=f"{a_name_prefix} - {i:03d}",
+                name=f"{a_name_prefix} - {loc} - {i:02d}",
                 asset_type=a_type,
                 location=loc,
                 status=status,
                 lifecycle_stage="operation",
-                ip_address=f"10.20.{loc_idx}.{i}",
-                eol_date=datetime.now() + timedelta(days=random.randint(30, 2000)),
-                metadata_json={"batch": "2026-Q1", "maintenance_cycle": "6 months"}
+                ip_address=f"192.168.{loc_idx}.{i+10}",
+                eol_date=datetime.now() + timedelta(days=random.randint(60, 1800)),
+                metadata_json={"fleet": "SmartYard-2026", "firmware": "v2.1.0"}
             )
             db.add(asset)
             total_count += 1
@@ -65,7 +69,7 @@ def seed_enterprise_assets_large():
                 db.commit()
 
     db.commit()
-    print(f"✅ Successfully seeded {total_count} high-performance enterprise assets with unique codes.")
+    print(f"✅ Successfully seeded {total_count} assets across {len(locations)} locations.")
     db.close()
 
 if __name__ == "__main__":
