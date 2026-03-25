@@ -27,6 +27,12 @@ def seed_enterprise_assets():
             metadata_json={"os": "RHEL 9.2", "specs": "64GB RAM, 2TB SSD"}
         ),
         models.Asset(
+            asset_code="PC-GJ-ENG-42", name="Engineering High-End Workstation",
+            asset_type="PC", location="Engineering Office 3F", status="active",
+            lifecycle_stage="operation", ip_address="10.20.10.42",
+            metadata_json={"specs": "RTX 4090, 128GB RAM", "user": "AX Team"}
+        ),
+        models.Asset(
             asset_code="NET-GJ-CORE-01", name="Yard-Wide Backbone Switch",
             asset_type="Network", location="Network Hub Room", status="active",
             lifecycle_stage="operation", ip_address="10.20.0.1",
