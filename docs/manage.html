@@ -237,7 +237,92 @@
     </div>
 
     <script>
-        // Populate 100 locations for the datalist
+        const API_URL = "http://127.0.0.1:8000/api/v1/assets";
+
+        // Initial Load
+        window.onload = loadAssets;
+
+        async function loadAssets() {
+            const tbody = document.getElementById('assetBody');
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">데이터를 불러오는 중... (1,000개 이상의 자산 스캔)</td></tr>';
+            
+            try {
+                const response = await fetch(API_URL);
+                const assets = await response.json();
+                
+                tbody.innerHTML = ''; // Clear
+                
+                assets.sort((a, b) => b.id - a.id).forEach(asset => {
+                    const tr = document.createElement('tr');
+                    const statusClass = asset.status === 'active' ? 'status-active' : 'status-warning';
+                    
+                    tr.innerHTML = `
+                        <td>${asset.asset_code}</td>
+                        <td>${asset.name}</td>
+                        <td style="font-size: 13px; color: var(--secondary);">${asset.asset_type}</td>
+                        <td>${asset.location}</td>
+                        <td><span class="status-badge ${statusClass}">${asset.status}</span></td>
+                        <td>
+                            <button class="action-btn" onclick="deleteAsset(${asset.id})">Delete</button>
+                        </td>
+                    `;
+                    tbody.appendChild(tr);
+                });
+            } catch (err) {
+                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--primary);">API 연결 실패. FastAPI 서버 구동 여부를 확인하세요.</td></tr>';
+            }
+        }
+
+        async function addAsset() {
+            const name = document.getElementById('assetName').value;
+            const type = document.getElementById('assetType').value;
+            const location = document.getElementById('assetLocation').value;
+            
+            if(!name || !location) return alert("자산명과 위치를 입력해주세요.");
+
+            const assetCode = `${type.substring(0,3).toUpperCase()}-USR-${Date.now().toString().slice(-4)}`;
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        asset_code: assetCode,
+                        name: name,
+                        asset_type: type,
+                        location: location,
+                        status: 'active',
+                        lifecycle_stage: 'operation'
+                    })
+                });
+
+                if (response.ok) {
+                    alert(`${name} 자산이 실시간 DB에 등록되었습니다.`);
+                    toggleForm(false);
+                    loadAssets();
+                } else {
+                    const error = await response.json();
+                    alert("등록 실패: " + error.detail);
+                }
+            } catch (err) {
+                alert("API 서버 통신 오류");
+            }
+        }
+
+        async function deleteAsset(id) {
+            if(!confirm("정말 이 자산을 CMDB에서 삭제하시겠습니까? (영구 삭제)")) return;
+            
+            try {
+                const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                if(response.ok) {
+                    loadAssets();
+                }
+            } catch (err) {
+                alert("삭제 처리 중 오류 발생");
+            }
+        }
+
+        // --- UI Interactions ---
         const locationList = document.getElementById('locationList');
         const zones = ["Yard", "Dock", "Shop", "Lab", "Hub", "Zone"];
         for(let i=1; i<=100; i++) {
@@ -254,19 +339,11 @@
         function applyPattern(input) {
             const val = input.value;
             const hint = document.getElementById('patternHint');
-            
-            // Pattern: "Iot-노" -> "IoT Node"
             if (val.toLowerCase().includes('iot-노') || val.toLowerCase().includes('iot-no')) {
-                input.value = "IoT Node - " + val.split('-').pop(); // Maintain suffix if any
+                input.value = "IoT Node - " + val.split('-').pop();
                 hint.style.display = 'block';
                 setTimeout(() => { hint.style.display = 'none'; }, 2000);
             }
-        }
-
-        function addAsset() {
-            const name = document.getElementById('assetName').value;
-            alert(`${name} 자산 등록 요청이 백엔드 API로 비동기 전송되었습니다. (정규 양식 검증 완료)`);
-            toggleForm(false);
         }
     </script>
 </body>
