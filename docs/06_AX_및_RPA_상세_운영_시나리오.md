@@ -1,4 +1,4 @@
-# 🤖 AX(AI) 및 RPA 상세 운영 시나리오 (AI & RPA Scenarios)
+# AX(AI) 및 RPA 상세 운영 시나리오 (AI & RPA Scenarios)
 > **모니터링을 넘어 지능형 자동화로 나아가는 Hanwha Ocean AX 전략**
 
 본 문서에서는 사용자님께서 질문하신 "AI가 어떤 도움을 주는지"와 "RPA 자동화는 어떤 의미인지"에 대한 구체적인 기술 시나리오를 설명합니다.

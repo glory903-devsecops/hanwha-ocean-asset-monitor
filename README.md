@@ -1,4 +1,7 @@
-# ⚓ 한화오션 AX 통합 자산 모니터링 시스템
+# 한화오션 AX 통합 자산 모니터링 시스템
+
+![Hanwha Ocean Logo](docs/images/logo_hanwha_ocean.png)
+
 [![Enterprise CI](https://github.com/glory903-devsecops/hanwha-ocean-asset-monitor/actions/workflows/python-app.yml/badge.svg)](https://github.com/glory903-devsecops/hanwha-ocean-asset-monitor/actions)
 [![Live Demo](https://img.shields.io/badge/Live_Demo-View_Dashboard-FF6B00?style=for-the-badge&logo=airplayvideo)](https://glory903-devsecops.github.io/hanwha-ocean-asset-monitor/)
 > **"한화오션 스마트 야드를 위한 AX 커맨드 센터"**
@@ -25,13 +28,13 @@
 - **라이프사이클 최적화**: ITAM/ITSM 베스트 프랙티스를 적용한 자동화된 CMDB(구성 관리 데이터베이스).
 - **RPA 통합 연계**: 장애 감지부터 부품 조달 및 티켓 발행까지 이어지는 프로세스 자동화의 기반.
 
-## 🛠 기술 스택
+## 기술 스택
 - **Backend**: Python (FastAPI), SQLAlchemy (SQLite/PostgreSQL), Pydantic
 - **Frontend**: React, Apache ECharts (역동적인 산업용 시각화)
 - **데이터 프로토콜**: MQTT (IoT), SNMP (네트워크 인프라)
 - **아키텍처**: RESTful API 및 JWT 보안이 적용된 3계층 웹 애플리케이션
 
-## 📂 프로젝트 구조 및 문서 저장소 (Documentation)
+## 프로젝트 구조 및 문서 저장소 (Documentation)
 이 프로젝트는 단순 개발을 넘어 기획부터 검증까지의 전 과정이 엔터프라이즈급으로 설계되었습니다.
 
 * **[문서 저장소 (Docs Directory)](./docs/README.md)**: 기획서, 전략 가이드 등의 상세 문서가 위치한 곳입니다.
@@ -66,9 +69,7 @@
   - **OT/IoT 스마트 야드**: 용접 로봇, 골리앗 크레인, 환경 센서 등 4개 자산.
 - **실시간 장애 감지**: **Dock 2 환경 센서(SNS-ENV-DOCK2-42)**의 이상 수치를 성공적으로 감지하여 경고(Warning) 상태로 분류.
 - **AX 기반 의사결정 지원**: 
-  - IT와 생산 현장(OT) 자산을 하나의 화면에서 통합 관리.
-  - 장비의 수명 주기(EOL)를 추적하여 선제적 교체 계획 수립 가능.
+  - IT와 생산 현장(OT) 자산을 하나의 화면에서 통합이것으로 포트폴리오의 시각적 완성도까지 완벽하게 마무리되었습니다. 한화오션에서의 좋은 결과를 다시 한번 진심으로 응원합니다.
 
----
-**기획 및 개발: Glory (AX/DevSecOps 엔지니어)**
+기획 및 개발: Glory (AX/DevSecOps 엔지니어)
 *IT 지원과 스마트 팩토리 혁신 사이의 가교(Bridge) 역할을 수행합니다.*

@@ -1,4 +1,6 @@
-# 📂 프로젝트 문서 저장소 (Documentation Archive)
+# 한화오션 AX 통합 모니터링 프로젝트 문서 저장소 (Documentation Archive)
+
+![Hanwha Ocean Logo](images/logo_hanwha_ocean.png)
 
 본 프로젝트의 기획부터 개발, 검증까지의 전 과정이 포함된 공식 문서들입니다.
 

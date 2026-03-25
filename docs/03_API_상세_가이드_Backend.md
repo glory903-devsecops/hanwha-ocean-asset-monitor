@@ -1,4 +1,4 @@
-# 🖥️ 백엔드 API 시스템 상세 명세 (Backend Technical Specification)
+# 백엔드 API 시스템 상세 명세 (Backend Technical Specification)
 > **FastAPI 기반 IT/OT 통합 자산 관리 엔진**
 
 본 문서는 시스템의 핵심 로직을 담당하는 백엔드 API(`127.0.0.1:8000/docs`)의 구조와 기술적 구현 상세를 설명합니다. 
@@ -16,15 +16,15 @@
 
 ## 2. 핵심 엔지니어링 포인트 (Technical Highlights)
 
-### 🚀 고성능 비동기 처리 (Asynchronous I/O)
+### 고성능 비동기 처리 (Asynchronous I/O)
 수천 개의 IoT 센서 및 IT 장비로부터 유입되는 메트릭 데이터를 병목 현상 없이 처리하기 위해 **Async/Await** 기반의 비동기 아키텍처를 채택했습니다. 이는 대규모 스마트 야드 환경에서의 확장성을 보장합니다.
 
-### 🛡️ 데이터 무결성 및 보안 (Pydantic & Validation)
+### 데이터 무결성 및 보안 (Pydantic & Validation)
 모든 입출력 데이터는 **Pydantic** 모델을 통해 엄격하게 검증됩니다. 
 - **Type Safety**: 잘못된 데이터 형식이 시스템에 유입되는 것을 원천 차단합니다.
 - **Auto-Serialization**: 복잡한 데이터 구조를 안전하게 JSON으로 변환하여 통신 신뢰성을 높입니다.
 
-### 📊 객체 지향 데이터 모델링 (SQLAlchemy ORM)
+### 객체 지향 데이터 모델링 (SQLAlchemy ORM)
 **SQLAlchemy**를 활용하여 데이터베이스 레이어를 추상화했습니다. 
 - 복잡한 자산 간 관계(Dependency Mapping)를 객체 단위로 관리하여 코드의 유지보수성을 확보했습니다.
 - 트랜잭션 관리를 통해 자산 등록 및 삭제 과정에서의 데이터 정합성을 보장합니다.
@@ -33,7 +33,7 @@
 
 ## 3. 주요 엔드포인트 명세
 
-### 📡 자산 상태 모니터링 (`/api/v1/assets`)
+### 자산 상태 모니터링 (`/api/v1/assets`)
 전사 IT/OT 자산의 실시간 상태 정보를 통합 조회합니다.
 - **Key Metrics**: 자산 고유 식별자, 배포 상태, 현재 구동 온도(OT), 리소스 점유율(IT).
 
