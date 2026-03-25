@@ -207,34 +207,38 @@
 
         <div class="main-grid">
             <div class="card">
-                <h3>Asset Load Trend (Yard Backbone vs OT Nodes)</h3>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
+                    <h3>Asset Load Trend (Real-time)</h3>
+                    <span style="font-size:12px; color:var(--success)">● AI Analyzing Trends...</span>
+                </div>
                 <div id="mainChart" class="chart-container"></div>
             </div>
             <div class="card">
-                <h3>Real-time Yard Status</h3>
+                <h3>AI Insights & Automation</h3>
                 <div class="asset-list">
-                    <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>ROB-WELD-D1-05 (Spider)</span>
-                        <span style="color: var(--success)">Operational</span>
+                    <!-- AI Insight 1 -->
+                    <div style="background: rgba(255, 107, 0, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
+                        <div style="font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">🎯 Predictive Maintenance Alert</div>
+                        <div style="font-size: 12px; color: var(--text);">골리앗 크레인 #5: 진동 패턴 분석 결과 <b>12일 내 정비 권장</b> (신뢰도 94%)</div>
                     </div>
-                    <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>CRN-GOL-YARD5-01 (Goliath)</span>
-                        <span style="color: var(--success)">Standby</span>
-                    </div>
-                    <div class="asset-item">
-                        <span><span class="status-dot status-warning"></span>SNS-ENV-DOCK2-42</span>
-                        <span style="color: var(--warning)">High Alert</span>
-                    </div>
-                    <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>NET-GJ-CORE-01 (Backbone)</span>
-                        <span style="color: var(--success)">Online</span>
-                    </div>
-                    <div class="asset-item">
-                        <span><span class="status-dot status-active"></span>SRV-GJ-CMDB-01 (Central)</span>
-                        <span style="color: var(--success)">Online</span>
-                    </div>
-                    <div class="stat-card" style="margin-top: 20px; padding: 15px; border-style: dashed; text-align: center;">
-                        <a href="manage.html" style="color: var(--primary); text-decoration: none; font-size: 14px; font-weight: 600;">기능 확장: 자산 등록/삭제 페이지 이동 →</a>
+                    
+                    <!-- RPA Log -->
+                    <div style="border: 1px solid rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
+                        <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--secondary);">🤖 Recent RPA Automation Logs</h4>
+                        <div style="font-size: 11px; line-height: 1.6;">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <span>[03:45] 신규 IoT 노드 발견 및 등록</span>
+                                <span style="color:var(--success)">Auto-Complete</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                                <span>[02:10] Dock 2 센서 장애 티켓 상신</span>
+                                <span style="color:var(--success)">RPA-Sent</span>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>[22:15] 자산 EOL 도래 구매요청서 작성</span>
+                                <span style="color:var(--success)">ERP-Synced</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
