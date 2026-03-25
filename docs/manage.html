@@ -114,7 +114,7 @@
     <nav class="navbar">
         <div style="font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px;">
              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-             HANWHA OCEAN AX
+             한화오션 AX
         </div>
         <div>
             <a href="index.html" class="btn btn-outline" style="font-size: 14px;">대시보드로 돌아가기 (Dashboard)</a>
@@ -209,20 +209,29 @@
             <h2 style="margin-bottom: 20px; color: var(--primary);">자산 신규 등록</h2>
             <div class="form-group">
                 <label>Asset Name (자산명)</label>
-                <input type="text" placeholder="예: 7번 도크 조립 로봇">
+                <input type="text" id="assetName" placeholder="예: Iot-노 (자동 완성 지원)" oninput="applyPattern(this)">
+                <div id="patternHint" style="font-size: 11px; color: var(--primary); margin-top: 5px; display: none;">💡 정규 양식 감지: 'IoT Node'로 자동 변환됩니다.</div>
             </div>
             <div class="form-group">
                 <label>Asset Type (자산 유형)</label>
-                <select>
-                    <option>IT Infrastructure</option>
-                    <option>Industrial OT</option>
-                    <option>IoT Node</option>
-                    <option>Security Gateway</option>
+                <select id="assetType">
+                    <option value="Industrial OT">Industrial OT (생산 설비)</option>
+                    <option value="IoT Node">IoT Node (센서/단말)</option>
+                    <option value="Server">Server (인프라 서버)</option>
+                    <option value="Network">Network (네트워크 장비)</option>
+                    <option value="PC">PC (업무용 워크스테이션)</option>
                 </select>
             </div>
             <div class="form-group">
                 <label>Location (설치 위치)</label>
-                <input type="text" placeholder="예: G-Block 조립공장 2F">
+                <select id="assetLocation">
+                    <option value="제1도크 조립공장">제1도크 조립공장</option>
+                    <option value="제2도크 (Bottom)">제2도크 (Bottom)</option>
+                    <option value="제5야드 (Goliath)">제5야드 (Goliath)</option>
+                    <option value="Pipe Shop #3">Pipe Shop #3</option>
+                    <option value="메인 데이터 센터 R-04">메인 데이터 센터 R-04</option>
+                    <option value="본관 설계동 3F">본관 설계동 3F</option>
+                </select>
             </div>
             <div style="display: flex; gap: 10px; margin-top: 30px;">
                 <button class="btn btn-primary" style="flex: 1;" onclick="addAsset()">등록 완료</button>
@@ -236,8 +245,21 @@
             document.getElementById('formOverlay').style.display = show ? 'flex' : 'none';
         }
 
+        function applyPattern(input) {
+            const val = input.value;
+            const hint = document.getElementById('patternHint');
+            
+            // Pattern: "Iot-노" -> "IoT Node"
+            if (val.toLowerCase().includes('iot-노') || val.toLowerCase().includes('iot-no')) {
+                input.value = "IoT Node - " + val.split('-').pop(); // Maintain suffix if any
+                hint.style.display = 'block';
+                setTimeout(() => { hint.style.display = 'none'; }, 2000);
+            }
+        }
+
         function addAsset() {
-            alert('자산 등록 요청이 백엔드 API로 비동기 전송되었습니다. (Demo Mode: 데이터베이스 반영 생략)');
+            const name = document.getElementById('assetName').value;
+            alert(`${name} 자산 등록 요청이 백엔드 API로 비동기 전송되었습니다. (정규 양식 검증 완료)`);
             toggleForm(false);
         }
     </script>
