@@ -166,8 +166,7 @@
 <body>
     <nav class="navbar">
         <div class="logo">
-            <img src="docs/images/logo_hanwha_ocean.png" alt="Hanwha Ocean Logo" style="height: 24px; margin-right: 10px;">
-            한화오션 AX COMMAND CENTER
+            한화오션 AX 커맨드 센터
         </div>
         <div style="display: flex; align-items: center; gap: 20px;">
             <a href="manage.html" style="color: var(--primary); text-decoration: none; font-weight: 600; font-size: 14px; border: 1px solid var(--primary); padding: 8px 16px; border-radius: 8px; transition: all 0.3s ease;">자산 관리 (Asset Variation) →</a>
@@ -179,26 +178,26 @@
 
     <div class="container">
         <div class="header-section">
-            <span class="badge">Enterprise Asset Monitoring</span>
-            <h1 style="font-size: 40px; margin-bottom: 10px;">Smart Yard IT/OT 통합 모니터링</h1>
+            <span class="badge">엔터프라이즈 자산 통합 모니터링</span>
+            <h1 style="font-size: 40px; margin-bottom: 10px;">스마트 야드 IT/OT 통합 관제</h1>
             <p style="color: var(--secondary); font-size: 18px;">한화오션 거제 사업장 실시간 자산 상태 및 이상 탐지 대시보드 (Demo)</p>
         </div>
 
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-label">Total Managed Assets</div>
+                <div class="stat-label">전체 관리 자산</div>
                 <div class="stat-value" id="totalAssets">1,000</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Active IoT Nodes</div>
+                <div class="stat-label">정상 작동 IoT 노드</div>
                 <div class="stat-value" id="successRate" style="color: var(--success)">99.4%</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">Critical OT Alerts</div>
+                <div class="stat-label">주요 위험 알람 (Critical)</div>
                 <div class="stat-value" id="criticalAlerts" style="color: var(--danger)">01</div>
             </div>
             <div class="stat-card">
-                <div class="stat-label">RPA Auto-Tickets (MTD)</div>
+                <div class="stat-label">RPA 자동 티켓 발행 (월간)</div>
                 <div class="stat-value">58</div>
             </div>
         </div>
@@ -206,23 +205,23 @@
         <div class="main-grid">
             <div class="card">
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px;">
-                    <h3>Asset Load Trend (Real-time)</h3>
-                    <span style="font-size:12px; color:var(--success)">● AI Analyzing Trends...</span>
+                    <h3>자산 부하 트렌드 (실시간 분석)</h3>
+                    <span style="font-size:12px; color:var(--success)">● AI 패턴 분석 중...</span>
                 </div>
                 <div id="mainChart" class="chart-container"></div>
             </div>
             <div class="card">
-                <h3>AI Insights & Automation</h3>
+                <h3>AI 분석 인사이트 및 자동화 로그</h3>
                 <div class="asset-list">
                     <!-- AI Insight 1 -->
                     <div style="background: rgba(255, 107, 0, 0.05); padding: 12px; border-radius: 8px; margin-bottom: 15px; border-left: 3px solid var(--primary);">
-                        <div style="font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">🎯 Predictive Maintenance Alert</div>
+                        <div style="font-size: 13px; font-weight: 600; color: var(--primary); margin-bottom: 4px;">🎯 AI 예측 정비 알람</div>
                         <div style="font-size: 12px; color: var(--text);">골리앗 크레인 #5: 진동 패턴 분석 결과 <b>12일 내 정비 권장</b> (신뢰도 94%)</div>
                     </div>
                     
                     <!-- RPA Log -->
                     <div style="border: 1px solid rgba(255,255,255,0.05); padding: 10px; border-radius: 8px;">
-                        <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--secondary);">🤖 Recent RPA Automation Logs</h4>
+                        <h4 style="font-size: 13px; margin-bottom: 8px; color: var(--secondary);">🤖 최근 RPA 업무 자동화 내역</h4>
                         <div style="font-size: 11px; line-height: 1.6;">
                             <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
                                 <span>[03:45] 신규 IoT 노드 발견 및 등록</span>
@@ -283,7 +282,7 @@
         var option = {
             backgroundColor: 'transparent',
             tooltip: { trigger: 'axis' },
-            legend: { data: ['Yard IT Backbone', 'Smart OT Robots'], textStyle: { color: '#94A3B8' } },
+            legend: { data: ['야드 IT 백본', '스마트 OT 로봇'], textStyle: { color: '#94A3B8' } },
             grid: { left: '3%', right: '4%', bottom: '3%', containLabel: true },
             xAxis: {
                 type: 'category',
@@ -298,7 +297,7 @@
             },
             series: [
                 {
-                    name: 'Yard IT Backbone',
+                    name: '야드 IT 백본',
                     type: 'line',
                     smooth: true,
                     data: [150, 232, 201, 154, 190, 330, 410],
@@ -311,7 +310,7 @@
                     }
                 },
                 {
-                    name: 'Smart OT Robots',
+                    name: '스마트 OT 로봇',
                     type: 'line',
                     smooth: true,
                     data: [320, 282, 391, 234, 490, 530, 610],

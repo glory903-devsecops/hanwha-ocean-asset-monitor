@@ -39,9 +39,9 @@ async def health_check():
 # --- Asset Management Endpoints ---
 
 @app.get("/api/v1/assets", response_model=List[schemas.Asset], tags=["Asset Management"])
-async def get_assets(db: Session = Depends(database.get_db)):
+async def get_assets(skip: int = 0, limit: int = 1000, db: Session = Depends(database.get_db)):
     """한화오션 야드 내 등록된 모든 IT/OT 자산 목록을 반환합니다."""
-    return db.query(models.Asset).all()
+    return db.query(models.Asset).offset(skip).limit(limit).all()
 
 @app.post("/api/v1/assets", response_model=schemas.Asset, tags=["Asset Management"])
 async def create_asset(asset: schemas.AssetCreate, db: Session = Depends(database.get_db)):

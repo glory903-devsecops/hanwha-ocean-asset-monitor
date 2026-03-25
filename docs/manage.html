@@ -113,11 +113,10 @@
 <body>
     <nav class="navbar">
         <div style="font-weight: 700; color: var(--primary); display: flex; align-items: center; gap: 10px;">
-             <img src="images/logo_hanwha_ocean.png" alt="Hanwha Ocean Logo" style="height: 20px;">
              한화오션 AX
         </div>
         <div>
-            <a href="index.html" class="btn btn-outline" style="font-size: 14px;">대시보드로 돌아가기 (Dashboard)</a>
+            <a href="index.html" class="btn btn-outline" style="font-size: 14px;">대시보드로 돌아가기</a>
         </div>
     </nav>
 
@@ -125,70 +124,30 @@
         <div class="header">
             <div>
                 <h1 style="font-size: 32px; margin-bottom: 5px;">자산 인벤토리 관리 (CMDB)</h1>
-                <p style="color: var(--secondary)">한화오션 거제 야드 내 모든 IT/OT 자산의 등록, 수정, 삭제 프로세스</p>
+                <p style="color: var(--secondary)">한화오션 거제 야드 내 모든 IT/OT 자산 (최근 50개 항목 표시)</p>
             </div>
-            <button class="btn btn-primary" onclick="toggleForm(true)">+ 자산 추가 (Register Asset)</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn btn-outline" onclick="downloadCSV()">보고서 다운로드 (CSV)</button>
+                <button class="btn btn-primary" onclick="toggleForm(true)">+ 신규 자산 등록</button>
+            </div>
         </div>
 
         <table class="asset-table">
             <thead>
                 <tr>
-                    <th>Asset ID</th>
-                    <th>Asset Name</th>
-                    <th>Type</th>
-                    <th>Location</th>
-                    <th>Status</th>
-                    <th>Actions</th>
+                    <th>자산 코드 (ID)</th>
+                    <th>자산 이름</th>
+                    <th>자산 유형</th>
+                    <th>설치 위치</th>
+                    <th>현재 상태</th>
+                    <th>관리 액션</th>
                 </tr>
             </thead>
             <tbody id="assetBody">
                 <tr>
-                    <td>ROB-WELD-D1-05</td>
-                    <td>Spider 용접 로봇 #5</td>
-                    <td>Industrial OT</td>
-                    <td>제1도크 조립공장</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>CRN-GOL-Y5-01</td>
-                    <td>골리앗 크레인 제어기</td>
-                    <td>Industrial OT</td>
-                    <td>제5야드 (Goliath)</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>SRV-GJ-CMDB-01</td>
-                    <td>AX 중앙 CMDB 서버</td>
-                    <td>IT Infra</td>
-                    <td>메인 데이터 센터 R-04</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>SNS-ENV-D2-42</td>
-                    <td>도크2 온도/습도 센서</td>
-                    <td>IoT Node</td>
-                    <td>제2도크 (Bottom)</td>
-                    <td><span class="status-badge status-warning">Warning</span></td>
-                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>PLC-PIPE-12</td>
-                    <td>배관 자동 절단 PLC</td>
-                    <td>Industrial OT</td>
-                    <td>Pipe Shop #3</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
-                </tr>
-                <tr>
-                    <td>NET-GJ-CORE-01</td>
-                    <td>야드 백본 스위치</td>
-                    <td>IT Infra</td>
-                    <td>네트워크 허브룸</td>
-                    <td><span class="status-badge status-active">Active</span></td>
-                    <td><button class="action-btn">Edit</button> | <button class="action-btn">Delete</button></td>
+                    <td colspan="6" style="text-align:center; padding: 40px; color: var(--secondary);">
+                        데이터베이스 연결 중...
+                    </td>
                 </tr>
             </tbody>
         </table>
@@ -244,13 +203,14 @@
 
         async function loadAssets() {
             const tbody = document.getElementById('assetBody');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">데이터를 불러오는 중... (1,000개 이상의 자산 스캔)</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">데이터를 불러오는 중... (시스템 부하 방지를 위해 상위 50개만 로드)</td></tr>';
             
             try {
-                const response = await fetch(API_URL);
+                // Fetch first 50 assets for UI performance
+                const response = await fetch(`${API_URL}?limit=50`);
                 const assets = await response.json();
                 
-                tbody.innerHTML = ''; // Clear
+                tbody.innerHTML = ''; 
                 
                 assets.sort((a, b) => b.id - a.id).forEach(asset => {
                     const tr = document.createElement('tr');
@@ -261,15 +221,40 @@
                         <td>${asset.name}</td>
                         <td style="font-size: 13px; color: var(--secondary);">${asset.asset_type}</td>
                         <td>${asset.location}</td>
-                        <td><span class="status-badge ${statusClass}">${asset.status}</span></td>
+                        <td><span class="status-badge ${statusClass}">${asset.status === 'active' ? '정상' : '확인필요'}</span></td>
                         <td>
-                            <button class="action-btn" onclick="deleteAsset(${asset.id})">Delete</button>
+                            <button class="action-btn" onclick="deleteAsset(${asset.id})">삭제</button>
                         </td>
                     `;
                     tbody.appendChild(tr);
                 });
             } catch (err) {
                 tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--primary);">API 연결 실패. FastAPI 서버 구동 여부를 확인하세요.</td></tr>';
+            }
+        }
+
+        async function downloadCSV() {
+            try {
+                // Fetch all assets for CSV (no limit)
+                const response = await fetch(API_URL);
+                const assets = await response.json();
+                
+                let csv = 'AssetCode,Name,Type,Location,Status,Created\n';
+                assets.forEach(a => {
+                    csv += `${a.asset_code},${a.name.replace(/,/g, '')},${a.asset_type},${a.location},${a.status},${a.created_at}\n`;
+                });
+                
+                const blob = new Blob(["\ufeff" + csv], { type: 'text/csv;charset=utf-8;' });
+                const link = document.createElement("a");
+                const url = URL.createObjectURL(blob);
+                link.setAttribute("href", url);
+                link.setAttribute("download", `hanwha_ocean_assets_${new Date().toISOString().split('T')[0]}.csv`);
+                link.style.visibility = 'hidden';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            } catch (err) {
+                alert("CSV 다운로드 처리 중 오류가 발생했습니다.");
             }
         }
 
