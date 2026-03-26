@@ -247,28 +247,35 @@
     </footer>
 
     <script>
-        const API_URL = "http://127.0.0.1:8000/api/v1/assets";
+        // Dual-mode API detection: Absolute if running as file, relative if served by FastAPI
+        const IS_FILE_PROTOCOL = window.location.protocol === 'file:';
+        const API_BASE = IS_FILE_PROTOCOL ? "http://127.0.0.1:8000" : "";
+        const API_URL = `${API_BASE}/api/v1/assets`;
+
+        // Mock data for offline fallback (Portfolio Safety)
+        const MOCK_ASSETS = Array.from({length: 1000}, (_, i) => ({
+            id: i, status: i % 100 === 0 ? 'critical' : (i % 20 === 0 ? 'warning' : 'active')
+        }));
 
         async function updateDashboardStats() {
             try {
                 const response = await fetch(API_URL);
+                if (!response.ok) throw new Error("Offline");
                 const assets = await response.json();
-                
-                // Update Total Count
-                document.getElementById('totalAssets').innerText = assets.length.toLocaleString();
-                
-                // Update Critical Alerts
-                const criticals = assets.filter(a => a.status === 'critical').length;
-                document.getElementById('criticalAlerts').innerText = String(criticals).padStart(2, '0');
-                
-                // Update Success Rate (Simulated but based on real status)
-                const activeCount = assets.filter(a => a.status === 'active').length;
-                const successRate = ((activeCount / assets.length) * 100).toFixed(1);
-                document.getElementById('successRate').innerText = successRate + "%";
-                
+                renderStats(assets);
             } catch (err) {
-                console.error("Dashboard Sync Failed:", err);
+                console.warn("API Offline, using Mock Data for Portfolio Preview.");
+                renderStats(MOCK_ASSETS);
             }
+        }
+
+        function renderStats(assets) {
+            document.getElementById('totalAssets').innerText = assets.length.toLocaleString();
+            const criticals = assets.filter(a => a.status === 'critical').length;
+            document.getElementById('criticalAlerts').innerText = String(criticals).padStart(2, '0');
+            const activeCount = assets.filter(a => a.status === 'active').length;
+            const successRate = ((activeCount / assets.length) * 100).toFixed(1);
+            document.getElementById('successRate').innerText = successRate + "%";
         }
 
         window.onload = () => {

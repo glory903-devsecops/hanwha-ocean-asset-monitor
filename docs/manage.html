@@ -196,41 +196,63 @@
     </div>
 
     <script>
-        const API_URL = "http://127.0.0.1:8000/api/v1/assets";
+        const IS_FILE_PROTOCOL = window.location.protocol === 'file:';
+        const API_BASE = IS_FILE_PROTOCOL ? "http://127.0.0.1:8000" : "";
+        const API_URL = `${API_BASE}/api/v1/assets`;
+
+        // Mock data for offline fallback
+        const MOCK_ASSETS = [
+            { id: 1, asset_code: "ROB-WELD-01", name: "Spider 용접 로봇 #1", asset_type: "Industrial OT", location: "Dock-001", status: "active" },
+            { id: 2, asset_code: "CRN-GOL-05", name: "골리앗 크레인 제어기", asset_type: "Industrial OT", location: "Yard-005", status: "active" },
+            { id: 3, asset_code: "SNS-ENV-42", name: "도크 온도 센서", asset_type: "IoT Node", location: "Dock-002", status: "warning" },
+            { id: 4, asset_code: "SRV-CMDB-01", name: "중앙 CMDB 서버", asset_type: "IT Infra", location: "Server-Room", status: "active" },
+            { id: 5, asset_code: "NET-CORE-01", name: "야드 백본 스위치", asset_type: "IT Infra", location: "Hub-Room", status: "active" }
+        ];
 
         // Initial Load
         window.onload = loadAssets;
 
         async function loadAssets() {
             const tbody = document.getElementById('assetBody');
-            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">데이터를 불러오는 중... (시스템 부하 방지를 위해 상위 50개만 로드)</td></tr>';
+            tbody.innerHTML = '<tr><td colspan="6" style="text-align:center;">데이터를 불러오는 중...</td></tr>';
             
             try {
-                // Fetch first 50 assets for UI performance
                 const response = await fetch(`${API_URL}?limit=50`);
+                if (!response.ok) throw new Error("Offline");
                 const assets = await response.json();
-                
-                tbody.innerHTML = ''; 
-                
-                assets.sort((a, b) => b.id - a.id).forEach(asset => {
-                    const tr = document.createElement('tr');
-                    const statusClass = asset.status === 'active' ? 'status-active' : 'status-warning';
-                    
-                    tr.innerHTML = `
-                        <td>${asset.asset_code}</td>
-                        <td>${asset.name}</td>
-                        <td style="font-size: 13px; color: var(--secondary);">${asset.asset_type}</td>
-                        <td>${asset.location}</td>
-                        <td><span class="status-badge ${statusClass}">${asset.status === 'active' ? '정상' : '확인필요'}</span></td>
-                        <td>
-                            <button class="action-btn" onclick="deleteAsset(${asset.id})">삭제</button>
-                        </td>
-                    `;
-                    tbody.appendChild(tr);
-                });
+                renderTable(assets);
             } catch (err) {
-                tbody.innerHTML = '<tr><td colspan="6" style="text-align:center; color:var(--primary);">API 연결 실패. FastAPI 서버 구동 여부를 확인하세요.</td></tr>';
+                console.warn("API Offline, using Mock Data for Preview.");
+                renderTable(MOCK_ASSETS, true);
             }
+        }
+
+        function renderTable(assets, isOffline = false) {
+            const tbody = document.getElementById('assetBody');
+            tbody.innerHTML = ''; 
+            
+            if (isOffline) {
+                const infoMsg = document.createElement('tr');
+                infoMsg.innerHTML = `<td colspan="6" style="text-align:center; background: rgba(255,107,0,0.1); color: var(--primary); font-size: 12px;">⚠️ 오프라인 모드: 백엔드 서버가 정지되어 데모용 샘플 데이터를 표시합니다.</td>`;
+                tbody.appendChild(infoMsg);
+            }
+
+            assets.sort((a, b) => b.id - a.id).forEach(asset => {
+                const tr = document.createElement('tr');
+                const statusClass = asset.status === 'active' ? 'status-active' : 'status-warning';
+                
+                tr.innerHTML = `
+                    <td>${asset.asset_code}</td>
+                    <td>${asset.name}</td>
+                    <td style="font-size: 13px; color: var(--secondary);">${asset.asset_type}</td>
+                    <td>${asset.location}</td>
+                    <td><span class="status-badge ${statusClass}">${asset.status === 'active' ? '정상' : '확인필요'}</span></td>
+                    <td>
+                        <button class="action-btn" onclick="deleteAsset(${asset.id})">삭제</button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
         }
 
         async function downloadCSV() {
