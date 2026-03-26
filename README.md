@@ -18,11 +18,11 @@
 
 ### 1. 통합 모니터링 대시보드 (AI & RPA Dashboard)
 ![Main Dashboard](docs/images/dashboard.png)
-> **100% 한글화 및 프리미엄 다크 모드가 적용된 메인 실시간 관제 대시보드**
+> **야드 내 IT/OT 자산 상태 및 AI 분석 인사이트를 실시간으로 시각화**
 
 ### 2. 자산 인벤토리 관리 (CMDB Management)
 ![Management Inventory](docs/images/management.png)
-> **성능 최적화(Pagination) 및 실시간 CRUD 기능이 적용된 자산 인벤토리 관리 화면**
+> **대규모 자산군(1,000+)에 대한 고성능 데이터 그리드 및 관리 인터페이스**
 
 ### 3. 자산 리스트 CSV/Excel 보고서 샘플
 ![CSV Export Preview](docs/images/csv_export.png)
