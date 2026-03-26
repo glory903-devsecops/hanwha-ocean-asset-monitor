@@ -257,9 +257,15 @@
 
         async function downloadCSV() {
             try {
-                // Fetch all assets for CSV (no limit)
-                const response = await fetch(API_URL);
-                const assets = await response.json();
+                let assets;
+                try {
+                    const response = await fetch(API_URL);
+                    if (!response.ok) throw new Error("Offline");
+                    assets = await response.json();
+                } catch (err) {
+                    console.warn("API Offline, exporting Mock Data.");
+                    assets = MOCK_ASSETS;
+                }
                 
                 let csv = 'AssetCode,Name,Type,Location,Status,Created\n';
                 assets.forEach(a => {
