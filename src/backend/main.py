@@ -5,15 +5,26 @@ import os
 from typing import List
 
 from . import database, schemas, service
+from fastapi.staticfiles import StaticFiles
 
-# Initialize Database (moved here for simplicity in this demo, but could be separate)
+# Initialize Database
 from . import models
 models.Base.metadata.create_all(bind=database.engine)
 
 app = FastAPI(
     title="Hanwha Ocean AX Asset Monitoring API",
-    version="1.1.0"
+    version="1.1.1"
 )
+
+# Serve Frontend UIs
+docs_path = os.path.join(os.getcwd(), "docs")
+if os.path.exists(docs_path):
+    app.mount("/ui", StaticFiles(directory=docs_path), name="ui")
+
+# Also serve RPA folder for preview/portfolios
+rpa_path = os.path.abspath(os.path.join(os.getcwd(), "..", "hanwha-ocean-rpa"))
+if os.path.exists(rpa_path):
+    app.mount("/rpa", StaticFiles(directory=rpa_path), name="rpa")
 
 app.add_middleware(
     CORSMiddleware,
