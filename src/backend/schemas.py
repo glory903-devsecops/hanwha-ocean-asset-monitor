@@ -25,6 +25,9 @@ class AssetBase(BaseModel):
     ip_address: Optional[str] = None
     metadata_json: Optional[Dict[str, Any]] = None
 
+class AssetCreate(AssetBase):
+    pass
+
 class Asset(AssetBase):
     id: int
     created_at: datetime
