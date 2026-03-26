@@ -17,12 +17,16 @@
 ## 🖥️ UI Preview (미리보기)
 
 ### 1. 통합 모니터링 대시보드 (AI & RPA Dashboard)
-![Dashboard Preview](docs/images/dashboard.png)
-> **AI 예측 기반의 정비 알람 및 RPA 자동화 로그를 실시간으로 시각화한 메인 화면입니다.**
+![Main Dashboard](docs/images/dashboard.png)
+> **100% 한글화 및 프리미엄 다크 모드가 적용된 메인 실시간 관제 대시보드**
 
 ### 2. 자산 인벤토리 관리 (CMDB Management)
-![Management Preview](docs/images/management.png)
-> **한화오션 거제 야드 내 모든 IT/OT 자산의 라이프사이클을 관리하는 인터페이스입니다.**
+![Management Inventory](docs/images/management.png)
+> **성능 최적화(Pagination) 및 실시간 CRUD 기능이 적용된 자산 인벤토리 관리 화면**
+
+### 3. 자산 리스트 CSV/Excel 보고서 샘플
+![CSV Export Preview](docs/images/csv_export.png)
+> **전체 자산 리스트를 엑셀 형식으로 즉시 추출하여 보고서로 활용 가능**
 
 ---
 
