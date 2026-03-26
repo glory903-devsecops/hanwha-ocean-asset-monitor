@@ -30,7 +30,39 @@
 - **Backend**: Python (FastAPI), SQLAlchemy (SQLite/PostgreSQL), Pydantic
 - **Frontend**: React, Apache ECharts (역동적인 산업용 시각화)
 - **데이터 프로토콜**: MQTT (IoT), SNMP (네트워크 인프라)
-- **아키텍처**: RESTful API 및 JWT 보안이 적용된 3계층 웹 애플리케이션
+## 🛠 시스템 아키텍처 (Clean Architecture 적용)
+
+본 프로젝트는 유지보수성과 확장성을 극대화하기 위해 **SOLID 원칙**과 **Clean Architecture** 패턴으로 리팩토링되었습니다.
+
+- **API Layer (Controller)**: FastAPI를 통한 요청 처리 및 스태틱 UI 서버 (Static UI Serving)
+- **Service Layer (Business Logic)**: 자산 등록 규칙, 중복 검사 등 비즈니스 로직 담당
+- **Repository Layer (Data Access)**: SQLAlchemy를 통한 데이터베이스 추상화 (SQLAlchemy ORM)
+- **Domain Layer (Entities)**: Pydantic을 활용한 데이터 모델 규격화 (Pydantic Schemas)
+
+## 📦 설치 및 실행 방법
+
+1. **가상환경 설정 및 패키지 설치**
+   ```powershell
+   python -m venv venv
+   .\venv\Scripts\activate
+   pip install -r requirements.txt
+   ```
+
+2. **서버 실행 (uvicorn)**
+   ```powershell
+   python run_dev.py
+   ```
+   *접속 정보: http://127.0.0.1:8000/ui/index.html*
+
+3. **데이터 초기화 (1,000개 자산)**
+   ```powershell
+   python src/seed_data.py
+   ```
+
+## 📊 기술 스택
+- **Backend**: Python 3.10+, FastAPI, SQLAlchemy, Pydantic, Uvicorn
+- **Frontend**: Vanilla JS (ES6+), ECharts, CSS Grid/Flexbox
+- **Database**: SQLite (Development) / PostgreSQL (Ready)
 
 ## 프로젝트 구조 및 문서 저장소 (Documentation)
 이 프로젝트는 단순 개발을 넘어 기획부터 검증까지의 전 과정이 엔터프라이즈급으로 설계되었습니다.
