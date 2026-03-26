@@ -252,10 +252,19 @@
         const API_BASE = IS_FILE_PROTOCOL ? "http://127.0.0.1:8000" : "";
         const API_URL = `${API_BASE}/api/v1/assets`;
 
-        // Mock data for offline fallback (Portfolio Safety)
-        const MOCK_ASSETS = Array.from({length: 1000}, (_, i) => ({
-            id: i, status: i % 100 === 0 ? 'critical' : (i % 20 === 0 ? 'warning' : 'active')
-        }));
+        // Mock data for offline fallback (Portfolio Safety - 1,000 items)
+        const MOCK_ASSETS = Array.from({length: 1000}, (_, i) => {
+            const types = ['Server', 'Network', 'PC', 'IoT Node', 'PLC', 'Robot'];
+            const locations = ['Dock-001', 'Dock-002', 'Yard-005', 'Hull-Shop', 'Engine-Power'];
+            return {
+                id: i, 
+                asset_code: `AX-${String(i).padStart(4, '0')}`,
+                name: `${types[i % types.length]} #${i+1}`,
+                asset_type: types[i % types.length],
+                location: locations[i % locations.length],
+                status: i % 150 === 0 ? 'critical' : (i % 30 === 0 ? 'warning' : 'active')
+            };
+        });
 
         async function updateDashboardStats() {
             try {
