@@ -4,7 +4,13 @@
 [![Live Demo](https://img.shields.io/badge/Live_Demo-View_Dashboard-FF6B00?style=for-the-badge&logo=airplayvideo)](https://glory903-devsecops.github.io/hanwha-ocean-asset-monitor/)
 > **"스마트 야드를 위한 AX 커맨드 센터"**
 
-이 프로젝트는 현대적 조선소 환경을 위해 설계된 엔터프라이즈급 **통합 IT/OT 자산 모니터링 시스템**입니다. 서버, 네트워크 등 IT 인프라와 센서, PLC, 로봇 등 생산 OT/IoT 장비에 대한 실시간 가시성을 제공하며, 2030 스마트 야드 전략을 직접적으로 지원합니다.
+한화오션 스마트 야드(Smart Yard) 2030 핵심 전략인 **AX(AI Transformation)**를 위한 엔터프라이즈급 자산 통합 모니터링 시스템입니다. 1,000대 이상의 IT/OT 자산을 실시간으로 관리하고 AI 기반 이상 징후를 탐지합니다.
+
+> [!TIP]
+> **준비된 3가지 포트폴리오 시연 방식** (Recruiter-Ready)
+> 1. **실시간 서버 모드**: `python run_dev.py` 실행 시 실제 SQL DB 연동 (백엔드 역량 증명)
+> 2. **오프라인 데모 모드**: 서버 없이 `index.html`만 열어도 1,000개 자산 자동 시뮬레이션 (간편 시연)
+> 3. **웹 라이브 데모**: [GitHub Pages](https://glory903-devsecops.github.io/hanwha-ocean-asset-monitor/) (접속 즉시 확인 가능)
 
 ---
 
