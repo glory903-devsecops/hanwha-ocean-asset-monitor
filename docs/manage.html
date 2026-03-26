@@ -200,14 +200,20 @@
         const API_BASE = IS_FILE_PROTOCOL ? "http://127.0.0.1:8000" : "";
         const API_URL = `${API_BASE}/api/v1/assets`;
 
-        // Mock data for offline fallback
-        const MOCK_ASSETS = [
-            { id: 1, asset_code: "ROB-WELD-01", name: "Spider 용접 로봇 #1", asset_type: "Industrial OT", location: "Dock-001", status: "active" },
-            { id: 2, asset_code: "CRN-GOL-05", name: "골리앗 크레인 제어기", asset_type: "Industrial OT", location: "Yard-005", status: "active" },
-            { id: 3, asset_code: "SNS-ENV-42", name: "도크 온도 센서", asset_type: "IoT Node", location: "Dock-002", status: "warning" },
-            { id: 4, asset_code: "SRV-CMDB-01", name: "중앙 CMDB 서버", asset_type: "IT Infra", location: "Server-Room", status: "active" },
-            { id: 5, asset_code: "NET-CORE-01", name: "야드 백본 스위치", asset_type: "IT Infra", location: "Hub-Room", status: "active" }
-        ];
+        // Mock data for offline fallback (1,000 items for Portfolio Preview)
+        const MOCK_ASSETS = Array.from({length: 1000}, (_, i) => {
+            const types = ['Server', 'Network', 'PC', 'IoT Node', 'PLC', 'Robot'];
+            const locations = ['Dock-001', 'Dock-002', 'Yard-005', 'Hull-Shop', 'Engine-Power'];
+            return {
+                id: i, 
+                asset_code: `AX-${String(i).padStart(4, '0')}`,
+                name: `${types[i % types.length]} #${i+1}`,
+                asset_type: types[i % types.length],
+                location: locations[i % locations.length],
+                status: i % 150 === 0 ? 'critical' : (i % 30 === 0 ? 'warning' : 'active'),
+                created_at: new Date().toISOString()
+            };
+        });
 
         // Initial Load
         window.onload = loadAssets;
@@ -223,7 +229,7 @@
                 renderTable(assets);
             } catch (err) {
                 console.warn("API Offline, using Mock Data for Preview.");
-                renderTable(MOCK_ASSETS, true);
+                renderTable(MOCK_ASSETS.slice(0, 50), true);
             }
         }
 
